@@ -15,6 +15,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/examportal")
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -28,7 +29,7 @@ public class UserController {
     @PostMapping("/user")
     public User createUser(@RequestBody User user) throws Exception {
         Set<UserRole> roles = new HashSet<>();
-
+        user.setProfile("default.png");
         Role role = new Role();
         role.setRoleId(45L);
         role.setRoleName("NORMAL");

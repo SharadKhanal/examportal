@@ -6,7 +6,9 @@ import com.examportalservice.entity.UserRole;
 import com.examportalservice.repo.RoleRepository;
 import com.examportalservice.repo.UserRepository;
 import com.examportalservice.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,6 +71,11 @@ public class UserServiceImpl implements UserService {
         }
         return  null;
     }
+
+//    @ExceptionHandler(UserNotFoundException.class)
+//    public ResponseEntity<?>exceptionHandler(UserNotFoundException ex){
+//        return ResponseEntity<
+//    }
 
 
 }
