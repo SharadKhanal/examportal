@@ -9,6 +9,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -54,17 +55,27 @@ public class MySecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/generate-token", "/user/").permitAll()
-                                .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                                .anyRequest().authenticated());
+//        http.csrf(csrf -> csrf.disable())
+//                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeRequests(authorize -> {
+//                    authorize
+//                            .antMatchers("/generate-token", "/user/").permitAll()
+//                            .antMatchers(HttpMethod.OPTIONS).permitAll()
+//                            .anyRequest().authenticated();
+//                });
+        http.csrf(AbstractHttpConfigurer ::disable).
+                authorizeHttpRequests(request->request.requestMatchers("/examportal/generate-token","/examportal/user").permitAll().
+                        requestMatchers(HttpMethod.OPTIONS).permitAll().
+                        anyRequest().authenticated()).
+                sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
+                exceptionHandling(exception->exception.authenticationEntryPoint(jwtAuthenticationEntryPoint));
 
         http.addFilterBefore(jwtAuthencationFilter, UsernamePasswordAuthenticationFilter.class);
-        http.authenticationProvider(authenticationProvider());  
+        http.authenticationProvider(authenticationProvider());
         return http.build();
     }
+
+
 
 }
