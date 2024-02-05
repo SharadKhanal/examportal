@@ -3,6 +3,7 @@ package com.examportalservice.controller;
 import com.examportalservice.entity.Role;
 import com.examportalservice.entity.User;
 import com.examportalservice.entity.UserRole;
+import com.examportalservice.helper.UserFoundException;
 import com.examportalservice.repo.UserRepository;
 import com.examportalservice.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -20,16 +20,19 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
+//        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostMapping("/user")
     public User createUser(@RequestBody User user) throws Exception {
         Set<UserRole> roles = new HashSet<>();
         user.setProfile("default.png");
+//        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
         Role role = new Role();
         role.setRoleId(45L);
         role.setRoleName("NORMAL");
@@ -86,5 +89,10 @@ public class UserController {
     @GetMapping("/userId/{userId}")
     public User getUserById(@PathVariable("userId")Long userId){
         return userService.getUserByUserId(userId);
+    }
+
+    @ExceptionHandler(UserFoundException.class)
+    public ResponseEntity<?> exceptionHandler(UserFoundException ex){
+        return ResponseEntity.ok(ex);
     }
 }

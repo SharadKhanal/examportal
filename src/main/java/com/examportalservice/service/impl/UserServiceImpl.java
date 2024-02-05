@@ -3,6 +3,7 @@ package com.examportalservice.service.impl;
 
 import com.examportalservice.entity.User;
 import com.examportalservice.entity.UserRole;
+import com.examportalservice.helper.UserFoundException;
 import com.examportalservice.repo.RoleRepository;
 import com.examportalservice.repo.UserRepository;
 import com.examportalservice.service.UserService;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
         User local = this.userRepository.findByUsername(user.getUsername());
 
         if (local != null) {
-            throw new Exception("User Already exist!!!");
+            throw new UserFoundException();
         } else {
             //first save role that exist in database
             for (UserRole userRole : userRoles) {

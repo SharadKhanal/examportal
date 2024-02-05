@@ -64,8 +64,14 @@ public class MySecurityConfig {
 //                            .antMatchers(HttpMethod.OPTIONS).permitAll()
 //                            .anyRequest().authenticated();
 //                });
+
+        //usable
         http.csrf(AbstractHttpConfigurer ::disable).
-                authorizeHttpRequests(request->request.requestMatchers("/examportal/generate-token","/examportal/user").permitAll().
+                authorizeHttpRequests(request->request.requestMatchers("/generate-token","/examportal/user","/category/add",
+                                "/category/update",
+                                "/category/all",
+                                "/category/getCategoryById/{id}",
+                                "/category/delete/{id}").permitAll().
                         requestMatchers(HttpMethod.OPTIONS).permitAll().
                         anyRequest().authenticated()).
                 sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).

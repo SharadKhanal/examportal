@@ -3,6 +3,7 @@ package com.examportalservice;
 import com.examportalservice.entity.Role;
 import com.examportalservice.entity.User;
 import com.examportalservice.entity.UserRole;
+import com.examportalservice.helper.UserFoundException;
 import com.examportalservice.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,33 +28,34 @@ public class ExamportalserviceApplication  {
 //	@Override
 //	public void run(String... args) throws Exception {
 //		System.out.println("Hello Sathi Lets Start the for Code!!");
-//		User user = new User();
-//		user.setUsername("Sharad.khanal");
-//		user.setPassword("9898989nmn");
-//		user.setFirstname("Sharad");
-//		user.setLastname("Khanal");
-//		user.setEmail("Sharad@gmail.com");
-//		user.setPhone("9889898989");
-//		user.setProfile("sdfdf.png");
+//		try {
+//			User user = new User();
+//			user.setUsername("Sharad.khanal");
+//			user.setPassword("9898989nmn");
+//			user.setFirstname("Sharad");
+//			user.setLastname("Khanal");
+//			user.setEmail("khanelsharad@gmail.com");
+//			user.setPhone("9889898989");
+//			user.setProfile("sdfdf.png");
 //
-//		System.out.println("user:"+user);
+//			System.out.println("user:" + user);
 //
-//		Role role1 = new Role();
+//			Role role1 = new Role();
 //
-//		role1.setRoleId(33L);
-//		role1.setRoleName("hhh");
-//
-//
-//		Set<UserRole> userRoleSet = new HashSet<>();
-//		UserRole userRole = new UserRole();
-//		userRole.setRole(role1);
-//		userRole.setUser(user);
+//			role1.setRoleId(33L);
+//			role1.setRoleName("ADMIN");
 //
 //
-//		User user1 = this.userService.createUser(user,userRoleSet);
-
-
-
-
+//			Set<UserRole> userRoleSet = new HashSet<>();
+//			UserRole userRole = new UserRole();
+//			userRole.setRole(role1);
+//			userRole.setUser(user);
+//
+//
+//			User user1 = this.userService.createUser(user, userRoleSet);
+//		}catch (UserFoundException e){
+//			e.printStackTrace();
+//		}
+//
 //	}
 }
