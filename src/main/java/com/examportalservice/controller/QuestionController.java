@@ -3,11 +3,11 @@ package com.examportalservice.controller;
 import com.examportalservice.entity.exam.Question;
 import com.examportalservice.entity.exam.Quiz;
 import com.examportalservice.service.QuestionService;
+import com.examportalservice.service.QuizService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/question")
@@ -15,9 +15,11 @@ import java.util.Set;
 public class QuestionController {
 
     private final QuestionService questionService;
+    private final QuizService quizService;
 
-    public QuestionController(QuestionService questionService) {
+    public QuestionController(QuestionService questionService, QuizService quizService) {
         this.questionService = questionService;
+        this.quizService = quizService;
     }
     @PostMapping("/add")
     public ResponseEntity<?> addQuestion(@RequestBody Question question){
@@ -50,9 +52,17 @@ public class QuestionController {
     // get all question by any quiz
     @GetMapping("/quiz/{quizId}")
     public  ResponseEntity<?> getAllQuestionOfQuiz(@PathVariable("quizId") Long quizId){
-        Quiz quiz = new Quiz();
-        quiz.setQid(quizId);
-        Set<Question>questionsOdQuiz = this.questionService.getQuestionOfQuiz(quiz);
-        return  ResponseEntity.ok(questionsOdQuiz);
+//        Quiz quiz = new Quiz();
+//        quiz.setQid(quizId);
+//        Set<Question>questionsOdQuiz = this.questionService.getQuestionOfQuiz(quiz);
+//        return  ResponseEntity.ok(questionsOdQuiz);
+        Quiz quiz = this.quizService.getQuizById(quizId);
+        Set<Question> questions = quiz.getQuestions();
+        List list = new ArrayList(questions);
+        if(list.size()> Integer.parseInt(quiz.getNoOfQuestions())){
+            list = list.subList(0,Integer.parseInt(quiz.getNoOfQuestions() +1));
+        }
+        Collections.shuffle(list);
+        return  ResponseEntity.ok(list);
     }
 }

@@ -71,7 +71,20 @@ public class MySecurityConfig {
                                 "/category/update",
                                 "/category/all",
                                 "/category/getCategoryById/{id}",
-                                "/category/delete/{id}").permitAll().
+                                "/category/delete/{id}",
+                                "/quiz/add",
+                                "/quiz/getQuizById/{id}",
+                                "/quiz/all",
+                                "/quiz/update",
+                                "/quiz/delete/{id}",
+                                "/question/add",
+                                "/question//getQuizById/{id}",
+                                "/question/all",
+                                "/question/update",
+                                "/question/delete/{id}",
+                                    "/question/getQuestionById/{id}"
+
+                        ).permitAll().
                         requestMatchers(HttpMethod.OPTIONS).permitAll().
                         anyRequest().authenticated()).
                 sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
