@@ -15,11 +15,11 @@ import java.util.Set;
 @SpringBootApplication
 public class ExamportalserviceApplication  {
 
-		private final UserService userService;
+//		private final UserService userService;
 
-	public ExamportalserviceApplication(UserService userService) {
-		this.userService = userService;
-	}
+//	public ExamportalserviceApplication(UserService userService) {
+//		this.userService = userService;
+//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(ExamportalserviceApplication.class, args);

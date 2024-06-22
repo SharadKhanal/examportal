@@ -67,7 +67,9 @@ public class MySecurityConfig {
 
         //usable
         http.csrf(AbstractHttpConfigurer ::disable).
-                authorizeHttpRequests(request->request.requestMatchers("/generate-token","/examportal/user","/category/add",
+                authorizeHttpRequests(request->request.requestMatchers("/generate-token",
+                                "/examportal/user",
+                                "/category/add",
                                 "/category/update",
                                 "/category/all",
                                 "/category/getCategoryById/{id}",
