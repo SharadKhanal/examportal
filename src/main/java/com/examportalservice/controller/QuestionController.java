@@ -65,4 +65,12 @@ public class QuestionController {
         Collections.shuffle(list);
         return  ResponseEntity.ok(list);
     }
+
+    @GetMapping("/quiz/all/{quizId}")
+    public  ResponseEntity<?> getAllQuestionOfQuizForAdmin(@PathVariable("quizId") Long quizId){
+        Quiz quiz = new Quiz();
+        quiz.setQid(quizId);
+        Set<Question>questionsOldQuiz = this.questionService.getQuestionOfQuiz(quiz);
+        return  ResponseEntity.ok(questionsOldQuiz);
+    }
 }
