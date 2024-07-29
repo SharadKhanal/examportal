@@ -29,7 +29,7 @@ public class Quiz {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @OneToMany(mappedBy = "quiz", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     //here jsonignore gareko chai cyclic dependency na aayos vanera becoz quiz fetch garda questions and again qstion fetch garda quiz
     @JsonIgnore
     private Set<Question> questions = new LinkedHashSet<>();

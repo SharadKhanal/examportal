@@ -84,7 +84,8 @@ public class MySecurityConfig {
                                 "/question/all",
                                 "/question/update",
                                 "/question/delete/{id}",
-                                    "/question/getQuestionById/{id}"
+                                "/question/getQuestionById/{id}",
+                                "question/quiz/all/{quizId}"
 
                         ).permitAll().
                         requestMatchers(HttpMethod.OPTIONS).permitAll().
