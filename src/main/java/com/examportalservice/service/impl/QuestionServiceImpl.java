@@ -4,12 +4,14 @@ import com.examportalservice.entity.exam.Question;
 import com.examportalservice.entity.exam.Quiz;
 import com.examportalservice.repo.QuestionRepository;
 import com.examportalservice.service.QuestionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@Slf4j
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
 
@@ -24,6 +26,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question updateQuestion(Question question) {
+            log.info("update  qstion impl serveree!");
         return this.questionRepository.save(question);
     }
 

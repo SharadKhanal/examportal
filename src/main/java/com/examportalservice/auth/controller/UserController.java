@@ -1,51 +1,40 @@
-package com.examportalservice.controller;
+package com.examportalservice.auth.controller;
 
-import com.examportalservice.entity.Role;
-import com.examportalservice.entity.User;
-import com.examportalservice.entity.UserRole;
+import com.examportalservice.auth.services.UserService;
+import com.examportalservice.auth.user.entity.User;
+import com.examportalservice.auth.user.repo.UserRepository;
 import com.examportalservice.helper.UserFoundException;
-import com.examportalservice.repo.UserRepository;
-import com.examportalservice.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+@RequestMapping("/users")
 @RestController
-@RequestMapping("/examportal")
+@AllArgsConstructor
 @CrossOrigin("*")
 public class UserController {
-
     private final UserService userService;
     private final UserRepository userRepository;
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserController(UserService userService, UserRepository userRepository) {
-        this.userService = userService;
-        this.userRepository = userRepository;
-//        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
+    @GetMapping("/")
+    public ResponseEntity getAllUser(){
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
-    @PostMapping("/user")
-    public User createUser(@RequestBody User user) throws Exception {
-        Set<UserRole> roles = new HashSet<>();
-        user.setProfile("default.png");
-//        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
-        Role role = new Role();
-        role.setRoleId(45L);
-        role.setRoleName("NORMAL");
+    @GetMapping("/me")
+    public ResponseEntity<?> getAuthenticateUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+        return ResponseEntity.ok(currentUser);
 
-        UserRole userRole = new UserRole();
-
-        userRole.setRole(role);
-        userRole.setUser(user);
-
-        roles.add(userRole);
-
-        return this.userService.createUser(user, roles);
     }
+
 
     @GetMapping("/{username}")
     public User getUserByUsername(@PathVariable("username") String username) {
@@ -69,22 +58,22 @@ public class UserController {
 //          return  user1;
 //        }
 //        return null;
-        if(this.userRepository.existsById(userId)){
+        if(this.userRepository.existsById(Math.toIntExact(userId))){
             user.setId(userId);
             return userRepository.save(user);
         }
         return null;
     }
 
-    @RequestMapping(method= RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> users = userService.getAllUsers();
-        if(!users.isEmpty()){
-            return ResponseEntity.ok(users);
-        }else{
-            return ResponseEntity.noContent().build();
-        }
-    }
+//    @RequestMapping(method= RequestMethod.GET)
+//    public ResponseEntity<List<User>> getAllUsers(){
+//        List<User> users = userService.getAllUsers();
+//        if(!users.isEmpty()){
+//            return ResponseEntity.ok(users);
+//        }else{
+//            return ResponseEntity.noContent().build();
+//        }
+//    }
 
     @GetMapping("/userId/{userId}")
     public User getUserById(@PathVariable("userId")Long userId){
@@ -95,4 +84,5 @@ public class UserController {
     public ResponseEntity<?> exceptionHandler(UserFoundException ex){
         return ResponseEntity.ok(ex);
     }
+
 }

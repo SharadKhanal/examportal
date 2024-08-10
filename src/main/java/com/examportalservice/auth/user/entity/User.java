@@ -1,18 +1,21 @@
-package com.examportalservice.entity;
+package com.examportalservice.auth.user.entity;
 
+import com.examportalservice.entity.Authority;
+import com.examportalservice.entity.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name="users")
+
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +41,17 @@ public class User implements UserDetails {
         this.userRoles.forEach(userRole -> {
             set.add(new Authority(userRole.getRole().getRoleName()));
         });
-        return null;
+        return set;
+    }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return List.of();
+//    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override
@@ -53,6 +66,11 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
         return true;
     }
 }

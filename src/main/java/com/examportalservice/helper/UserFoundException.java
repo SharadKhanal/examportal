@@ -1,6 +1,5 @@
 package com.examportalservice.helper;
 
-import com.examportalservice.entity.User;
 
 public class UserFoundException extends Exception{
 

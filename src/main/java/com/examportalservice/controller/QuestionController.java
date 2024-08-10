@@ -4,6 +4,7 @@ import com.examportalservice.entity.exam.Question;
 import com.examportalservice.entity.exam.Quiz;
 import com.examportalservice.service.QuestionService;
 import com.examportalservice.service.QuizService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/question")
 @CrossOrigin("*")
+@Slf4j
 public class QuestionController {
 
     private final QuestionService questionService;
@@ -40,6 +42,7 @@ public class QuestionController {
 
     @PutMapping("/update")
     public  ResponseEntity<?> updateQuestiion(@RequestBody Question question){
+        log.info("question updatee calleddddd!!!!!");
         Question question1 = this.questionService.updateQuestion(question);
         return ResponseEntity.ok(question1);
     }
