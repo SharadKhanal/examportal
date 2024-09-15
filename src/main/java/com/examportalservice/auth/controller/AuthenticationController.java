@@ -9,6 +9,7 @@ import com.examportalservice.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,14 +28,14 @@ public class AuthenticationController {
 
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @PostMapping("/signup")
     public Optional<User> register(@RequestBody User user) throws Exception {
         Set<UserRole> roles = new HashSet<>();
         user.setProfile("default.png");
-//        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
         Role role = new Role();
         role.setRoleId(100l);
         role.setRoleName("ADMIN");
