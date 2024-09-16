@@ -37,8 +37,8 @@ public class AuthenticationController {
         user.setProfile("default.png");
         user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
         Role role = new Role();
-        role.setRoleId(100l);
-        role.setRoleName("ADMIN");
+        role.setRoleId(10l);
+        role.setRoleName("NORMAL");
 
         UserRole userRole = new UserRole();
 
