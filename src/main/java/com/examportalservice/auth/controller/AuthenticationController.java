@@ -47,7 +47,6 @@ public class AuthenticationController {
 
         roles.add(userRole);
 
-
         return this.authenticationService.createUser(user, roles);
     }
 

@@ -1,5 +1,6 @@
 package com.examportalservice.service.impl;
 
+import com.examportalservice.entity.exam.Category;
 import com.examportalservice.entity.exam.Quiz;
 import com.examportalservice.repo.QuizRepository;
 import com.examportalservice.service.QuizService;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -41,5 +43,10 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public Quiz getQuizById(Long id) {
         return this.quizRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Quiz> getQuizByCategory(Category category) {
+        return quizRepository.findBycategory(category);
     }
 }
