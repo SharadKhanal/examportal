@@ -15,4 +15,8 @@ public interface QuizService {
     public Quiz getQuizById(Long id);
 
    public List<Quiz> getQuizByCategory(Category category);
+
+   public List<Quiz> getActiveQuizOfCategory(Category category);
+
+   public List<Quiz> getActiveQuizzes();
 }

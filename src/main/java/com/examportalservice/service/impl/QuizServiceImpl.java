@@ -49,4 +49,14 @@ public class QuizServiceImpl implements QuizService {
     public List<Quiz> getQuizByCategory(Category category) {
         return quizRepository.findBycategory(category);
     }
+
+    @Override
+    public List<Quiz> getActiveQuizOfCategory(Category category) {
+        return this.quizRepository.findByCategoryAndActive(category,true);
+    }
+
+    @Override
+    public List<Quiz> getActiveQuizzes() {
+        return this.quizRepository.findByActive(true);
+    }
 }
