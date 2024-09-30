@@ -76,4 +76,29 @@ public class QuestionController {
         Set<Question>questionsOldQuiz = this.questionService.getQuestionOfQuiz(quiz);
         return  ResponseEntity.ok(questionsOldQuiz);
     }
+
+    @PostMapping("/eval-quiz")
+    public ResponseEntity<?> evaluateQuiz(@RequestBody  List<Question> questions){
+        double marksGot =0;
+        int correctAnswer = 0;
+        int attempted = 0;
+
+        for(Question q : questions){
+            Question question = this.questionService.getQuestionById(q.getQusId());
+            if (question.getAnswer().equals(q.getGivenAnswer())){
+                correctAnswer ++;
+
+                double marksSingle = Double.parseDouble(questions.get(0).getQuiz().getMaxMarks())/questions.size();
+                marksGot += marksSingle;
+            }
+
+            if( q.getGivenAnswer() != null){
+                attempted ++;
+            }
+        }
+
+        Map<String,Object> map = Map.of("marksGot",marksGot,"correctAnswer",correctAnswer,"attempted",attempted);
+        return ResponseEntity.ok(map);
+
+    }
 }
